@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: esa-inventory-db
+    environment:
+      POSTGRES_DB: inventoryesatask
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data  # Local directory mapped to DB data directory to persist data locally
+    networks:
+      - esa-inventory
+
+networks:
+  esa-inventory:
+    driver: bridge

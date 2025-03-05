@@ -6,36 +6,40 @@ export const addItem = async (req: Request, res: Response) => {
   try {
     const { item } = req.params;
     const { quantity, expiry } = req.body;
-  
+
     if (!quantity || !expiry) {
       res.status(400).json({ error: "Invalid input" });
       return;
     }
-  
+
     await prisma.inventory.create({
       data: { itemName: item, quantity, expiry },
     });
-  
+
     res.status(201).json({});
   } catch (e) {
-    res.status(400).json({ error: "Something went wrong" });
+    res.status(400).json({ error: "Something went wrong!" });
   }
 };
 
 // Get Available Quantity
 export const getQuantity = async (req: Request, res: Response) => {
-  const { item } = req.params;
-  const now = Date.now();
+  try {
+    const { item } = req.params;
+    const now = Date.now();
 
-  const lots = await prisma.inventory.findMany({
-    where: { itemName: item, expiry: { gt: now } },
-    orderBy: { expiry: "asc" },
-  });
+    const lots = await prisma.inventory.findMany({
+      where: { itemName: item, expiry: { gt: now } },
+      orderBy: { expiry: "asc" },
+    });
 
-  const quantity = lots.reduce((sum: number, lot) => sum + lot.quantity, 0);
-  const validTill = lots.length ? Number(lots[lots.length - 1].expiry) : null;
+    const quantity = lots.reduce((sum: number, lot) => sum + lot.quantity, 0);
+    const validTill = lots.length ? Number(lots[lots.length - 1].expiry) : null;
 
-  res.json({ quantity, validTill });
+    res.json({ quantity, validTill });
+  } catch (e) {
+    res.status(400).json({ error: "Something went wrong!" });
+  }
 };
 
 // Sell Item
