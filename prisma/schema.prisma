@@ -1,0 +1,20 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Inventory {
+  id        String @id @default(uuid())
+  itemName String
+  quantity  Int
+  expiry    BigInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([itemName])
+  @@index([expiry])
+}
