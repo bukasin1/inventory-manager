@@ -1,4 +1,4 @@
-# auth-rbac-app
+# Inventory Express Server
 
 ## Objective
 
