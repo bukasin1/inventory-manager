@@ -34,7 +34,7 @@ export const getQuantity = async (req: Request, res: Response) => {
     });
 
     const quantity = lots.reduce((sum: number, lot) => sum + lot.quantity, 0);
-    const validTill = lots.length ? Number(lots[lots.length - 1].expiry) : null;
+    const validTill = lots.length ? Number(lots[0].expiry) : null;
 
     res.json({ quantity, validTill });
   } catch (e) {
