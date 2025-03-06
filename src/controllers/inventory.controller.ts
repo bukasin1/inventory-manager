@@ -102,6 +102,8 @@ export const sellItem = async (req: Request, res: Response) => {
     res.json({});
   } catch (e) {
     console.log("error while selling item...", e);
-    res.status(400).json({ error: "Something went wrong!" });
+    res
+      .status(400)
+      .json({ error: (e as Error).message || "Something went wrong!" });
   }
 };
