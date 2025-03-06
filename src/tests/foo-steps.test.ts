@@ -1,15 +1,8 @@
 import request from "supertest";
-import { prisma } from "../utils/prismaClient";
 import app from "../app";
 import { waitUntil } from "./utils";
-import { clearExpiredInventory } from "../utils/dbCleanup";
 
 describe("Inventory API - Item: foo", () => {
-  beforeAll(async () => {
-    // Ensure a clean database before starting
-    await prisma.inventory.deleteMany();
-  });
-
   it("item foo - should correctly handle inventory addition, selling, and expiration", async () => {
     const item = "foo";
     const t0 = Date.now();
@@ -63,10 +56,5 @@ describe("Inventory API - Item: foo", () => {
     res = await request(app).get(`/inventory/${item}/quantity`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ quantity: 0, validTill: null });
-  });
-
-  afterAll(async () => {
-    clearExpiredInventory();
-    await prisma.$disconnect();
   });
 });
