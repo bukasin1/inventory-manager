@@ -1,5 +1,7 @@
 import app from "./app";
-import "./utils/dbCleanup";
+import { scheduleCleanupCron } from "./utils/dbCleanup";
+
+scheduleCleanupCron()
 
 const PORT = process.env.PORT || 3000;
 
