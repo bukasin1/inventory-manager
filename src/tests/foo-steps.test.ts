@@ -1,6 +1,8 @@
 import request from "supertest";
 import { prisma } from "../utils/prismaClient";
 import app from "../app";
+import { waitUntil } from "./utils";
+import { clearExpiredInventory } from "../utils/dbCleanup";
 
 describe("Inventory API - Item: foo", () => {
   beforeAll(async () => {
@@ -11,14 +13,6 @@ describe("Inventory API - Item: foo", () => {
   it("item foo - should correctly handle inventory addition, selling, and expiration", async () => {
     const item = "foo";
     const t0 = Date.now();
-
-    async function waitUntil(targetTime: number) {
-      const now = Date.now();
-      const remainingTime = targetTime - now;
-      if (remainingTime > 0) {
-        await new Promise((r) => setTimeout(r, remainingTime));
-      }
-    }
 
     // 1. t=t0, Add 10 items expiring at t0 + 10000
     console.log("url...", `/inventory/${item}/add`, item);
@@ -74,6 +68,7 @@ describe("Inventory API - Item: foo", () => {
   });
 
   afterAll(async () => {
+    clearExpiredInventory();
     await prisma.$disconnect();
   });
 });
