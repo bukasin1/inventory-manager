@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export function isTestingLocalhost() {
   const url = new URL(process.env.DATABASE_URL || '');
   if (
