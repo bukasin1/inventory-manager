@@ -1,4 +1,5 @@
 import app from "./app";
+import "./utils/dbCleanup";
 
 const PORT = process.env.PORT || 3000;
 

@@ -15,8 +15,6 @@ describe("Inventory API - Item: foo", () => {
     const t0 = Date.now();
 
     // 1. t=t0, Add 10 items expiring at t0 + 10000
-    console.log("url...", `/inventory/${item}/add`, item);
-    const url = `/inventory/${item}/add`;
     await request(app)
       .post(`/inventory/${item}/add`)
       .send({ quantity: 10, expiry: t0 + 10000 })

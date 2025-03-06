@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import { prisma } from "../utils/prismaClient";
+import { clearExpiredInventory } from "../utils/dbCleanup";
 
 describe("Inventory API", () => {
   beforeAll(async () => {
@@ -54,6 +55,7 @@ describe("Inventory API", () => {
   });
 
   afterAll(async () => {
+    clearExpiredInventory();
     await prisma.$disconnect();
   });
 });
