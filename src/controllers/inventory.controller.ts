@@ -18,6 +18,7 @@ export const addItem = async (req: Request, res: Response) => {
 
     res.status(201).json({});
   } catch (e) {
+    console.log("error while adding item...", e);
     res.status(400).json({ error: "Something went wrong!" });
   }
 };
@@ -38,6 +39,7 @@ export const getQuantity = async (req: Request, res: Response) => {
 
     res.json({ quantity, validTill });
   } catch (e) {
+    console.log("Error while getting item...", e);
     res.status(400).json({ error: "Something went wrong!" });
   }
 };
@@ -98,7 +100,8 @@ export const sellItem = async (req: Request, res: Response) => {
     });
 
     res.json({});
-  } catch (error) {
-    res.status(400).json({ error: (error as Error).message });
+  } catch (e) {
+    console.log("error while selling item...", e);
+    res.status(400).json({ error: "Something went wrong!" });
   }
 };
