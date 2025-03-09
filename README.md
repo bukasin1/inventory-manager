@@ -6,7 +6,7 @@ Create an Express Server for managing perishable inventory
 
 ## Installation
 
-Ensure node version running is 16 and above
+Ensure node version running is 20 and above
 
 ```bash
 npm install
