@@ -8,6 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/inventory", inventoryRoutes);
+app.use("/", inventoryRoutes);
 
 export default app;
