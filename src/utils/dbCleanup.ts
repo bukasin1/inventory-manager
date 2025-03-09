@@ -5,10 +5,9 @@ export const clearExpiredInventory = async () => {
   try {
     const now = Date.now();
     await prisma.inventory.deleteMany({ where: { expiry: { lte: now } } });
+    console.log("Expired inventory cleared");
   } catch (e) {
     console.log("Error occured during cleanup");
-  } finally {
-    console.log("Expired inventory cleared");
   }
 };
 
